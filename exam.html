@@ -30,11 +30,14 @@
                            
             }
     </style>
+    <script type="text/javascript">
+        
+    </script>
 </head>
 
     
 <body>
-    <div id="container" ng-app="myApp" ng-controller="Main">
+    <div id="container" ng-app="myApp" ng-controller="Main" ng-init="init();" style="background-color: #FFFFFF;">
     <nav>
         <ul>
             <li><a href="#"><img id="logo" src="images/stcet_logo2.png" style="float: left;"></a></li>
@@ -42,7 +45,7 @@
             <li><button id="submit" class="button" ng-click="dialogBox()" style="vertical-align:middle"> <b><span>Submit </span></b> </button></li>
         </ul>
     </nav>
-    <p style="font-size: 11px; color: #FF0000; padding-left: 61.6%; padding-top: 82px;"><b>Hours &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMinutes&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSeconds</b></p>
+    <p style="font-size: 11px; color: #FF0000; padding-left: 841px; padding-top: 85px;"><b>Hours &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMinutes&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSeconds</b></p>
     <!-- count particles -->
     <div class="vl">
         <br>
@@ -73,7 +76,7 @@
             <button id="q{{getId(n)}}" class="qbtn" ng-click="qSelect(n)" ng-repeat="n in range(91,100)">{{n}}</button> 
         </div>
     </div>
-    <div id="question_side">
+    <div id="question_side" style="border-top: 1px solid gray;">
 
         <!-- I will add a div here later for the mark, previous, next buttons -->
         <br>
@@ -89,19 +92,30 @@
 
         <!-- Question div comes after this line -->
 
-        <div style="float: left;">
-            <p style="margin-left: 20px; padding-right: 15px; font-family: sans-serif; font-size: 40px; float: left; border-right: 1px solid gray">9.</p>
+        <div style="float: left;" ng-model="currentQs">
+            <!--<p style="margin-left: 20px; padding-right: 15px; font-family: sans-serif; font-size: 40px; float: left; border-right: 1px solid gray">9.</p>
             <p style="margin-left: 10px; font-size: 25px; float: left; width: 850px;">This is a sample question. Just assume this is a really hard math question and pretend to get frustrated. What is 2 + 2?</p>
 
             <form style="margin-left: 80px; font-family: sans-serif; font-size: 20px;">
-                <br><br>
+                <br><br>s
                     <input type="radio" name="answer" value="4" ng-click="qAnswer(clicked)">&nbsp&nbsp4<br>
                     <input type="radio" name="answer" value="Four" ng-click="qAnswer(clicked)">&nbsp&nbspFour<br>
                     <input type="radio" name="answer" value="Not this option" ng-click="qAnswer(clicked)">&nbsp&nbspNot this option<br>
                     <input type="radio" name="answer" value="Option 1" ng-click="qAnswer(clicked)">&nbsp&nbspOption 1<br>
                 <br>
+            </form> -->
+            <!--<input type="button" value="c" onclick="toggleFullScreen(document.body)" /> -->
+            <p style="margin-left: 20px; padding-right: 15px; font-family: sans-serif; font-size: 40px; float: left; border-right: 1px solid gray">{{currentQs.q_id}}{{"."}}</p>
+            <p style="margin-left: 10px; font-size: 25px; float: left; width: 850px;">{{currentQs.text}}</p>
+            <br>
+            <form style="margin-left: 80px; font-family: sans-serif; font-size: 20px;">
+                <br><br>
+                    <input type="radio" name="answer" value="4" ng-click="qAnswer(clicked)">&nbsp&nbsp{{currentQs.op1}}<br>
+                    <input type="radio" name="answer" value="Four" ng-click="qAnswer(clicked)">&nbsp&nbsp{{currentQs.op2}}<br>
+                    <input type="radio" name="answer" value="Not this option" ng-click="qAnswer(clicked)">&nbsp&nbsp{{currentQs.op3}}<br>
+                    <input type="radio" name="answer" value="Option 1" ng-click="qAnswer(clicked)">&nbsp&nbsp{{currentQs.op4}}<br>
+                <br>
             </form>
-
         </div>
         <!--<p> Here the questions go. </p> -->
 

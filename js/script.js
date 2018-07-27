@@ -1,4 +1,18 @@
 
+function toggleFullScreen(elem) {
+
+  if (elem.requestFullScreen) {
+      elem.requestFullScreen();
+    } else if (elem.mozRequestFullScreen) {
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullScreen) {
+      elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+    } else if (elem.msRequestFullscreen) {
+      elem.msRequestFullscreen();
+    }
+}
+
+
 angular.module('myApp', []).controller('Main', function ($scope) {
 	$scope.range = function(min, max, step){
 		step = step || 1;
@@ -10,6 +24,10 @@ angular.module('myApp', []).controller('Main', function ($scope) {
 	$scope.getId = function(k){
 		var n = k;
 		return n;
+	};
+
+	$scope.fs = function(){
+		toggleFullScreen(document.body);
 	};
 
 	$scope.clicked = 1;
@@ -25,10 +43,12 @@ angular.module('myApp', []).controller('Main', function ($scope) {
 			$scope.count = 0;
 		}
 	}
-
+	
 	$scope.buttonClick= function (s){
 		$scope.selectedButton = s; 
 	};*/
+
+	
 	$scope.btn = 'q';
  	$scope.qSelect = function(n) {
  		var property = document.getElementById("q"+$scope.clicked);
@@ -37,6 +57,8 @@ angular.module('myApp', []).controller('Main', function ($scope) {
   	$scope.clicked = n;
   	$scope.ccolor = property.style.backgroundColor;
 		property.style.backgroundColor = "#0B73DB";
+		$scope.currentQs = qsArr[n-1];
+		toggleFullScreen(document.body);
  	};
 
  	$scope.qMark = function(n) {
@@ -68,6 +90,31 @@ angular.module('myApp', []).controller('Main', function ($scope) {
 		$scope.ccolor = "#FFFFFF";
   };
 
+  var qs =  function(q_id, text, op1, op2, op3, op4, ans, sub_id){
+			this.q_id = q_id,
+			this.text = text,
+			this.op1 = op1,
+			this.op2 = op2,
+			this.op3 = op3,
+			this.op4 = op4,
+			this.ans = ans,
+			this.sub_id = sub_id
+	};
+	//var qsArr = [new qs(1,"This is the qs"), new qs(2, "This is second qs")];
+	var qsArr = [];
+	//var qsArr = JSON.parse('{ "q_id": "1", "text": "This is the first qs.", "op1": "1", "op2": "2", "op3": "3", "op4": "4", "ans": "2", "sub_id": "1" }');
+	$scope.init = function(){
+		//$scope.qSelect(2);
+		//qsArr = [new qs(1,"This is the qs"), new qs(2, "This is second qs"), new qs(3, "This is third qs")];
+		for (var i = 0; i < 100; i++) {
+
+			qsArr.push(new qs(i+1, "This is the qs "+(i+1), (i+1), (i+2), (i+3), (i+4), "2", 1));
+		}
+		//qsArr.push(new qs(1, "This is the first qs.", "1", "2", "3", "4", "2", 1));
+		//qsArr.push(new qs(2, "This is the second qs.", "6", "7", "8", "9", "6", 1));
+		$scope.currentQs = qsArr[0];
+		console.log("Start");
+	};
 
  	// Get the modal
   var modal = document.getElementById('myModal');
@@ -112,7 +159,7 @@ function Main($scope){
 }   */ 
 
 // Set the date we're counting down to
-var countDownDate = new Date().getTime() + 1000*60*60*3 + 2000; // 1st years at least deserve 3 hours for 100 questions
+var countDownDate = new Date().getTime() + 1000*60*60*2 + 2000; // 1st years at least deserve 2 hours for 100 questions
 var x = setInterval(function() {
 		var now = new Date().getTime();
 		var distance = countDownDate - now;
@@ -133,4 +180,5 @@ var x = setInterval(function() {
 				clearInterval(x);
 				document.getElementById("demo").innerHTML = "EXPIRED";
 		}
+
 }, 1000);
